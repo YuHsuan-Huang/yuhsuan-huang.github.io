@@ -696,6 +696,34 @@ section{
   gap: 18px 30px;
   margin-top: 22px;
 }
+.about-lead:empty {
+  display: none;
+}
+
+.about-copy p {
+  margin: 0;
+  padding: 28px 0;
+  border-top: 1px solid #bdbdc1;
+  color: #66666b;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+}
+
+.about-copy p:last-child {
+  border-bottom: 1px solid #bdbdc1;
+}
+
+.about-copy strong {
+  display: block;
+  margin-top: 10px;
+  color: #171719;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.65;
+}
 </style>
 
 </head>
@@ -792,40 +820,52 @@ section{
 </div>
 
     <div class="article-layout">
-      <aside>02｜研究動機</aside>
+  <aside>02｜研究動機</aside>
 
-      <div>
-        <h3>從設計實作延伸至研究問題</h3>
-        <p>
-          在前期專案中，我注意到視覺障礙者面臨的問題不只與介面操作有關，
-          也涉及移動情境、資訊取得方式及公共運輸服務設計。
-        </p>
-      </div>
-    </div>
+  <div>
+    <h3>從輔助系統設計延伸至資訊配置研究</h3>
 
-    <div class="article-layout">
-      <aside>03｜研究方法</aside>
-
-      <div>
-        <h3>預計採用的研究方式</h3>
-        <p>
-          在這裡填寫訪談、觀察、使用者研究、資料分析方式及預計研究對象。
-        </p>
-      </div>
-    </div>
-
-    <div class="article-layout">
-      <aside>04｜預期貢獻</aside>
-
-      <div>
-        <h3>研究成果與應用方向</h3>
-        <p>
-          在這裡說明研究預計解決的問題，以及對無障礙資訊服務、
-          公共運輸設計或圖書資訊研究可能產生的貢獻。
-        </p>
-      </div>
-    </div>
+    <p>
+      前期 HCI 專案已完成視障者捷運自主通勤輔助系統原型，
+      但準則性評估發現，語音提示可能受到站內廣播與環境噪音干擾，
+      過於頻繁的震動也可能造成煩躁與認知疲勞。
+      因此，本研究將焦點從「增加提示」轉向不同資訊類型與回饋模態之間的適配，
+      探討如何在資訊理解、導航表現與認知負荷之間取得平衡。
+    </p>
   </div>
+</div>
+
+    <div class="article-layout">
+  <aside>03｜研究方法</aside>
+
+  <div>
+    <h3>受試者內實驗與半結構式訪談</h3>
+
+    <p>
+      研究預計招募 18 歲以上、具公共運輸或捷運使用經驗的視覺障礙者，
+      比較語音、震動及語音加震動等回饋條件。
+      研究將觀察不同配置下的資訊理解正確率、反應時間、
+      任務完成時間、錯誤轉向與偏離路徑，並以 NASA-TLX、
+      系統可用性量表及訪談了解認知負荷與使用經驗。
+    </p>
+  </div>
+</div>
+
+    <div class="article-layout">
+  <aside>04｜預期貢獻</aside>
+
+  <div>
+    <h3>建立資訊類型與回饋模態的設計原則</h3>
+
+    <p>
+      本研究將比較不同資訊類型與回饋方式對資訊理解、
+      導航任務表現及主觀工作負荷的影響，
+      建立 Information Type × Feedback Modality 的設計架構。
+      研究成果預期可作為捷運導航、公共運輸及其他無障礙資訊服務
+      在語音與觸覺回饋配置上的設計參考。
+    </p>
+  </div>
+</div>
 </section>
 
 <!-- 讀書計畫 -->
@@ -1280,10 +1320,11 @@ heroSubtitle: "國立臺灣大學",
 heroDescription: "主修｜圖書資訊學系　輔系｜心理學系",
       aboutTitle: "關於我",
 
-aboutLead:
-  "01｜跨領域背景\nLibrary & Information Science × Psychology",
+aboutLead: "",
 
 aboutText: [
+  "01｜跨領域背景<br><strong>Library & Information Science × Psychology</strong>",
+
   "02｜目前關注<br><strong>HCI × Accessibility × Information Behavior</strong>",
 
   "03｜研究方向<br><strong>視障者捷運自主通勤中的多模態資訊呈現：語音與觸覺回饋對資訊理解、導航表現與認知負荷之影響</strong>"
