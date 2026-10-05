@@ -1829,148 +1829,176 @@ function showGallerySlide(index) {
     "#detailGallery figure"
   );
 
-  if (!slides.length) return;
+  const counter = $("galleryCounter");
 
-  /* 超過最後一張就回到第一張 */
+  if (!slides.length) {
+    if (counter) counter.textContent = "";
+    return;
+  }
+
+  // 超過最後一張時回到第一張
   galleryIndex = (index + slides.length) % slides.length;
 
   slides.forEach((slide, slideIndex) => {
     const isActive = slideIndex === galleryIndex;
 
     slide.classList.toggle("active", isActive);
+
     slide.setAttribute(
       "aria-hidden",
       isActive ? "false" : "true"
     );
   });
 
-  $("galleryCounter").textContent =
-    String(galleryIndex + 1).padStart(2, "0") +
-    " / " +
-    String(slides.length).padStart(2, "0");
-}
-   
-    function openProject(p){
-      const gallery = Array.isArray(p.gallery) ? p.gallery : [];
-
-const galleryWrap = $("detailGalleryWrap");
-const galleryBox = $("detailGallery");
-
-if (galleryWrap && galleryBox) {
-  galleryWrap.hidden = gallery.length === 0;
-
-  galleryBox.innerHTML = gallery.map((photo, index) => `
-    <figure class="gallery-slide">
-      <img
-        src="${photo.src}"
-        alt="${photo.alt || `${p.title}第 ${index + 1} 張照片`}"
-      >
-    </figure>
-  `).join("");
-
-  if (gallery.length > 0) {
-    galleryIndex = 0;
-    showGallerySlide(0);
+  if (counter) {
+    counter.textContent =
+      String(galleryIndex + 1).padStart(2, "0") +
+      " / " +
+      String(slides.length).padStart(2, "0");
   }
 }
-      $("detailExtra").hidden = p.number === "05";
-      safeImage($("detailImage"), p);
 
-      $("galleryPrev")?.addEventListener("click", () => {
+function openProject(p) {
+  $("detailExtra").hidden = p.number === "05";
+
+  safeImage($("detailImage"), p);
+
+  $("detailNumber").textContent =
+    "PROJECT / " + (p.number || "");
+
+  $("detailTitle").textContent = p.title || "";
+
+  $("detailTitle").classList.toggle(
+    "project-title-compact",
+    p.number === "06"
+  );
+
+  $("detailSummary").textContent = p.summary || "";
+  $("detailSummary").hidden = !p.summary;
+
+  $("detailImage").classList.toggle(
+    "keep-original",
+    p.number === "01"
+  );
+
+  document.querySelector(".detail-photo").classList.toggle(
+    "wide-project",
+    p.number === "01"
+  );
+
+  // YouTube 影片
+  const detailYoutube = $("detailYoutube");
+  const detailVideoWrap = $("detailVideoWrap");
+
+  if (p.youtubeId) {
+    detailVideoWrap.hidden = false;
+
+    detailYoutube.src =
+      "https://www.youtube-nocookie.com/embed/" +
+      p.youtubeId;
+  } else {
+    detailVideoWrap.hidden = true;
+    detailYoutube.src = "";
+  }
+
+  // 年份、角色、期間
+  $("detailYear").textContent = p.year || "";
+  $("detailRole").textContent = p.role || "";
+  $("detailDuration").textContent = p.duration || "";
+
+  // 作品連結
+  const links = p.links || (
+    p.link
+      ? [{
+          label: "開啟作品網址",
+          url: p.link
+        }]
+      : []
+  );
+
+  $("detailLinks").innerHTML = links.map(item => `
+    <a
+      class="project-link"
+      href="${item.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>${item.label}</span>
+      <span>↗</span>
+    </a>
+  `).join("");
+
+  // 照片輪播
+  const gallery = Array.isArray(p.gallery)
+    ? p.gallery
+    : [];
+
+  const galleryWrap = $("detailGalleryWrap");
+  const galleryBox = $("detailGallery");
+
+  if (galleryWrap && galleryBox) {
+    galleryWrap.hidden = gallery.length === 0;
+
+    galleryBox.innerHTML = gallery.map((photo, index) => {
+      // 同時支援純檔名，以及 { src, alt } 格式
+      const src =
+        typeof photo === "string"
+          ? photo
+          : photo.src;
+
+      const alt =
+        typeof photo === "string"
+          ? `${p.title} 展覽照片 ${index + 1}`
+          : photo.alt || `${p.title} 展覽照片 ${index + 1}`;
+
+      return `
+        <figure
+          class="${index === 0 ? "active" : ""}"
+          aria-hidden="${index === 0 ? "false" : "true"}"
+        >
+          <img
+            src="${src}"
+            alt="${alt}"
+            loading="lazy"
+          >
+        </figure>
+      `;
+    }).join("");
+
+    if (gallery.length > 0) {
+      galleryIndex = 0;
+      showGallerySlide(0);
+    }
+  }
+
+  // Overview、Process、Outcome
+  $("detailOverview").textContent = p.overview || "";
+  $("detailProcess").textContent = p.process || "";
+  $("detailOutcome").textContent = p.outcome || "";
+
+  $("detailOverview")
+    .closest(".detail-block")
+    .hidden = !p.overview;
+
+  $("detailProcess")
+    .closest(".detail-block")
+    .hidden = !p.process;
+
+  $("detailOutcome")
+    .closest(".detail-block")
+    .hidden = !p.outcome;
+
+  $("projectDialog").showModal();
+}
+
+// 輪播左右按鈕，只設定一次
+$("galleryPrev")?.addEventListener("click", () => {
   showGallerySlide(galleryIndex - 1);
 });
 
 $("galleryNext")?.addEventListener("click", () => {
   showGallerySlide(galleryIndex + 1);
 });
-
-$("detailNumber").textContent = "PROJECT / " + (p.number || "");
-$("detailTitle").textContent = p.title || "";
-
-$("detailTitle").classList.toggle(
-  "project-title-compact",
-  p.number === "06"
-);
-
-$("detailSummary").textContent = p.summary || "";
-$("detailSummary").hidden = !p.summary;
-      $("detailImage").classList.toggle(
-  "keep-original",
-  p.number === "01"
-);
-
-document.querySelector(".detail-photo").classList.toggle(
-  "wide-project",
-  p.number === "01"
-);
-const detailYoutube = $("detailYoutube");
-const detailVideoWrap = $("detailVideoWrap");
-
-if(p.youtubeId){
-  detailVideoWrap.hidden = false;
-
-  detailYoutube.src =
-    "https://www.youtube-nocookie.com/embed/" +
-    p.youtubeId;
-}else{
-  detailVideoWrap.hidden = true;
-  detailYoutube.src = "";
-}
-      $("detailYear").textContent = p.year || "";
-$("detailRole").textContent = p.role || "";
-$("detailDuration").textContent = p.duration || "";
-      const links = p.links || (
-  p.link
-    ? [{ label:"開啟作品網址", url:p.link }]
-    : []
-);
-
-$("detailLinks").innerHTML = links.map(item => `
-  <a
-    class="project-link"
-    href="${item.url}"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span>${item.label}</span>
-    <span>↗</span>
-  </a>
-`).join("");
-
-const gallery = p.gallery || [];
-const detailGalleryWrap = $("detailGalleryWrap");
-const detailGallery = $("detailGallery");
-
-detailGalleryWrap.hidden = gallery.length === 0;
-
-detailGallery.innerHTML = gallery.map((src, index) => `
-  <figure class="${index === 0 ? "active" : ""}">
-    <img
-      src="${src}"
-      alt="${p.title} 展覽照片 ${index + 1}"
-      loading="lazy"
-    >
-  </figure>
-`).join("");
-
-galleryIndex = 0;
-const counter = $("galleryCounter");
-
-if (counter) {
-  counter.textContent =
-    String(galleryIndex + 1).padStart(2, "0") +
-    " / " +
-    String(slides.length).padStart(2, "0");
-}
-      $("detailOverview").textContent = p.overview || "";
-$("detailProcess").textContent = p.process || "";
-$("detailOutcome").textContent = p.outcome || "";
-
-$("detailOverview").closest(".detail-block").hidden = !p.overview;
-$("detailProcess").closest(".detail-block").hidden = !p.process;
-$("detailOutcome").closest(".detail-block").hidden = !p.outcome;
-      $("projectDialog").showModal();
-    }
     document.querySelector(".dialog-close").addEventListener("click",()=>$("projectDialog").close());
 $("projectDialog").addEventListener("close", () => {
   $("detailYoutube").src = "";
