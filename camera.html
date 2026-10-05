@@ -1,8 +1,14 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+  rel="icon"
+  type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111111'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-family='Arial' font-size='42' font-weight='700' fill='white'%3EYH%3C/text%3E%3C/svg%3E"
+>
 
   <title>黃永相數位紀念館｜黃聿瑄作品集</title>
 
@@ -106,6 +112,43 @@
     border-bottom: 0;
   }
 }
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 32px 0 48px;
+}
+
+.project-action {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  min-width: 270px;
+  padding: 18px 22px;
+  border: 1px solid #fff;
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.project-action:hover {
+  background: #111;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .project-actions {
+    display: grid;
+  }
+
+  .project-action {
+    width: 100%;
+    min-width: 0;
+  }
+}
   </style>
 </head>
 
@@ -116,6 +159,27 @@
   <p class="category">數位圖書館 | 資訊檢索</p>
   <h1>黃永相數位紀念館</h1>
 
+ <a
+      class="button"
+      href="https://huangyongxiang1920photos.omeka.net/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      進入數位紀念館 ↗
+    </a>
+
+    <a
+      class="button"
+      href="files/DG_lib.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      黃永相數位紀念館 企劃書 ↗
+    </a>
+
+    <a class="button" href="npc.html">
+      ← 上一件：誰是音樂祭 NPC
+    </a>
   <p>
     以個人照片與生命歷程為核心，
     運用 Omeka 建立可瀏覽、搜尋與理解的數位紀念館。
@@ -167,27 +231,7 @@
       最終完成可供瀏覽與檢索的數位記憶館，讓資料不只是被保存，也能透過分類、詮釋資料與數位展覽重新建立脈絡。
     </p>
 
-    <a
-      class="button"
-      href="https://huangyongxiang1920photos.omeka.net/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      進入數位紀念館 ↗
-    </a>
-
-    <a
-      class="button"
-      href="files/DG_lib.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      黃永相數位紀念館 企劃書 ↗
-    </a>
-
-    <a class="button" href="npc.html">
-      ← 上一件：誰是音樂祭 NPC
-    </a>
+    
   </section>
 </main>
 </body>
