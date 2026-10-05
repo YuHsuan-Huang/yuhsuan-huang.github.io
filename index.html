@@ -611,6 +611,18 @@ section{
   background: #19191b;
 }
 @media (max-width: 800px) {
+
+  .hero-visual {
+  padding-left: 20px;
+}
+
+.hero-portrait {
+  width: 170px;
+}
+
+.hero-school {
+  margin-top: 40px;
+}
   .study-table {
     min-width: 0;
   }
@@ -734,11 +746,15 @@ section{
   filter: none;
 }
 /* 封面個人照片 */
+.hero-visual {
+  padding-left: clamp(30px, 5vw, 80px);
+}
+
 .hero-portrait {
   display: block;
-  width: clamp(130px, 15vw, 180px);
+  width: clamp(180px, 18vw, 220px);
   aspect-ratio: 3 / 4;
-  margin: 24px 0 28px;
+  margin: 28px 0 0;
   border: 1px solid #55555a;
   object-fit: cover;
   object-position: center top;
@@ -748,16 +764,16 @@ section{
 /* 稍微縮小封面中文名字 */
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.7rem, 4.8vw, 4.7rem);
+  font-size: clamp(2.8rem, 4.8vw, 4.8rem);
   line-height: 1;
   letter-spacing: -0.045em;
 }
 
 /* 英文名字 */
 .hero-english-name {
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   color: #b5b5ba;
-  font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
   font-weight: 600;
   letter-spacing: 0.2em;
   line-height: 1.5;
@@ -775,6 +791,20 @@ section{
   .hero-english-name {
     letter-spacing: 0.14em;
   }
+}
+
+.hero-school {
+  margin-top: 60px;
+}
+
+.hero-school h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.hero-school p {
+  margin: 18px 0 0;
+  color: #b5b5ba;
 }
 </style>
 
@@ -800,31 +830,37 @@ section{
   <main id="top">
 <section class="hero theme-black" id="intro">
   <div class="shell hero-grid">
-    <div>
+
+    <!-- 左欄：標示與照片 -->
+    <div class="hero-visual">
       <p class="eyebrow" id="heroLabel"></p>
 
-<img
-  class="hero-portrait"
-  src="photos/selfpic.jpg"
-  alt="黃聿瑄個人照片"
->
-
-<h1 id="heroTitle"></h1>
-
-<p class="hero-english-name">
-  YU HSUAN HUANG
-</p>
+      <img
+        class="hero-portrait"
+        src="photos/selfpic.jpg"
+        alt="黃聿瑄個人照片"
+      >
     </div>
 
+    <!-- 右欄：姓名與學校 -->
     <div class="hero-side">
-      <h2 id="heroSubtitle"></h2>
-      <p id="heroDescription"></p>
+      <h1 id="heroTitle"></h1>
+
+      <p class="hero-english-name">
+        YU HSUAN HUANG
+      </p>
+
+      <div class="hero-school">
+        <h2 id="heroSubtitle"></h2>
+        <p id="heroDescription"></p>
+      </div>
 
       <a class="button" href="#works">
         <span>探索作品</span>
         <span>↘</span>
       </a>
     </div>
+
   </div>
 </section>
     <section class="works theme-gray" id="works">
