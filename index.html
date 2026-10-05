@@ -655,6 +655,33 @@ section{
     letter-spacing: 0.12em;
   }
 }
+.about-copy p {
+  margin: 0;
+  padding: 28px 0;
+  border-top: 1px solid #bdbdc1;
+  color: #66666b;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+}
+
+.about-copy p:last-child {
+  border-bottom: 1px solid #bdbdc1;
+}
+
+.about-copy strong {
+  display: block;
+  margin-top: 10px;
+  color: #171719;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.65;
+}
+
+.about-lead {
+  padding-bottom: 28px;
+}
 </style>
 
 </head>
@@ -717,21 +744,38 @@ section{
     <h2 class="info-title">研究計畫</h2>
 
     <div class="article-layout">
-      <aside>01｜研究主題</aside>
+  <aside>01｜研究主題</aside>
 
-      <div>
-        <h3>視覺障礙者公共運輸資訊與使用經驗研究</h3>
+  <div>
+    <h3>視障者捷運自主通勤中的多模態資訊呈現</h3>
 
-        <p>
-          本研究延伸自「視障者捷運輔助系統」課程專案，
-          探討視覺障礙者在搭乘公共運輸時取得、理解及使用資訊的經驗。
-        </p>
+    <p class="research-subtitle">
+      語音與觸覺回饋對資訊理解、導航表現與認知負荷之影響
+    </p>
 
-        <a class="text-link" href="#works">
-          查看前期設計專案 ↗
-        </a>
-      </div>
+    <p>
+      本研究延伸自「視障者捷運輔助系統」課程專案，
+      聚焦視障者在捷運自主通勤過程中的資訊需求，
+      探討不同多模態資訊呈現方式對資訊理解、
+      導航表現及認知負荷的影響。
+    </p>
+
+    <div class="research-links">
+      <a
+        class="text-link"
+        href="https://drive.google.com/file/d/1Pw3ZdWFhmUM7rlWDlJVCgc_N52kfa7Mt/view?usp=drive_link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        查看完整研究計畫 ↗
+      </a>
+
+      <a class="text-link" href="#works">
+        查看前期設計專案 ↗
+      </a>
     </div>
+  </div>
+</div>
 
     <div class="article-layout">
       <aside>02｜研究動機</aside>
@@ -1220,11 +1264,18 @@ heroLabel: "PERSONAL PORTFOLIO · 2026",
 heroTitle: "黃聿瑄",
 heroSubtitle: "國立臺灣大學",
 heroDescription: "主修｜圖書資訊學系　輔系｜心理學系",
-      aboutText: [
-        "目前就讀臺灣大學圖書資訊學系，學習興趣包含＿＿＿＿、＿＿＿＿與＿＿＿＿。",
-        "這份作品集收錄我在課程、研究與實作中的重要經驗，也呈現我如何思考、選擇與持續修正。",
-      ],
-      tags: ["研究分析", "內容企劃", "團隊合作", "實作能力"],
+      aboutTitle: "關於我",
+
+aboutLead:
+  "01｜跨領域背景\nLibrary & Information Science × Psychology",
+
+aboutText: [
+  "02｜目前關注<br><strong>HCI × Accessibility × Information Behavior</strong>",
+
+  "03｜研究方向<br><strong>視障者捷運自主通勤中的多模態資訊呈現：語音與觸覺回饋對資訊理解、導航表現與認知負荷之影響</strong>"
+],
+
+tags: [],
      
       projects: [
         {
