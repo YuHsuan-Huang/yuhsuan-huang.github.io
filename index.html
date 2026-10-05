@@ -365,17 +365,6 @@
   letter-spacing:0.15em;
 }
 
-/* 第一張圖片依照原始比例顯示 */
-.card[data-number="01"] .card-photo{
-  height:auto;
-  aspect-ratio:2880 / 1284;
-}
-
-/* 第一張作品卡保留原色 */
-.card[data-number="01"] .card-photo img{
-  object-fit:contain;
-  filter:none;
-}
 /* 第一張作品的內頁圖片比例 */
 .detail-photo.wide-project{
   height:auto;
@@ -723,6 +712,21 @@ section{
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.65;
+}
+/* 所有作品卡統一為 16:9，圖片完整顯示 */
+.card-photo {
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  overflow: hidden;
+}
+
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
 }
 </style>
 
