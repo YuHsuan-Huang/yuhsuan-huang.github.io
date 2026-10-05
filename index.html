@@ -728,6 +728,49 @@ section{
   object-position: center;
   filter: none;
 }
+/* 封面個人照片 */
+.hero-portrait {
+  display: block;
+  width: clamp(130px, 15vw, 180px);
+  aspect-ratio: 3 / 4;
+  margin: 24px 0 28px;
+  border: 1px solid #55555a;
+  object-fit: cover;
+  object-position: center top;
+  filter: none;
+}
+
+/* 稍微縮小封面中文名字 */
+.hero h1 {
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 5.8rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+/* 英文名字 */
+.hero-english-name {
+  margin: 18px 0 0;
+  color: #b5b5ba;
+  font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+}
+@media (max-width: 800px) {
+  .hero-portrait {
+    width: 130px;
+    margin-top: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 15vw, 4.8rem);
+  }
+
+  .hero-english-name {
+    letter-spacing: 0.14em;
+  }
+}
 </style>
 
 </head>
@@ -754,7 +797,18 @@ section{
   <div class="shell hero-grid">
     <div>
       <p class="eyebrow" id="heroLabel"></p>
-      <h1 id="heroTitle"></h1>
+
+<img
+  class="hero-portrait"
+  src="photos/selfpic.jpg"
+  alt="黃聿瑄個人照片"
+>
+
+<h1 id="heroTitle"></h1>
+
+<p class="hero-english-name">
+  YU HSUAN HUANG
+</p>
     </div>
 
     <div class="hero-side">
