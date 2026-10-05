@@ -1851,14 +1851,36 @@ function showGallerySlide(index) {
 }
    
     function openProject(p){
+      const gallery = Array.isArray(p.gallery) ? p.gallery : [];
+
+const galleryWrap = $("detailGalleryWrap");
+const galleryBox = $("detailGallery");
+
+if (galleryWrap && galleryBox) {
+  galleryWrap.hidden = gallery.length === 0;
+
+  galleryBox.innerHTML = gallery.map((photo, index) => `
+    <figure class="gallery-slide">
+      <img
+        src="${photo.src}"
+        alt="${photo.alt || `${p.title}第 ${index + 1} 張照片`}"
+      >
+    </figure>
+  `).join("");
+
+  if (gallery.length > 0) {
+    galleryIndex = 0;
+    showGallerySlide(0);
+  }
+}
       $("detailExtra").hidden = p.number === "05";
       safeImage($("detailImage"), p);
 
-      $("galleryPrev").addEventListener("click", () => {
+      $("galleryPrev")?.addEventListener("click", () => {
   showGallerySlide(galleryIndex - 1);
 });
 
-$("galleryNext").addEventListener("click", () => {
+$("galleryNext")?.addEventListener("click", () => {
   showGallerySlide(galleryIndex + 1);
 });
 
@@ -1932,7 +1954,14 @@ detailGallery.innerHTML = gallery.map((src, index) => `
 `).join("");
 
 galleryIndex = 0;
-showGallerySlide(galleryIndex);
+const counter = $("galleryCounter");
+
+if (counter) {
+  counter.textContent =
+    String(galleryIndex + 1).padStart(2, "0") +
+    " / " +
+    String(slides.length).padStart(2, "0");
+}
       $("detailOverview").textContent = p.overview || "";
 $("detailProcess").textContent = p.process || "";
 $("detailOutcome").textContent = p.outcome || "";
