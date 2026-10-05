@@ -806,7 +806,7 @@ section{
   margin: 18px 0 0;
   color: #b5b5ba;
 }
-/* Project 06 左右滑動照片預覽 */
+/* Project 06 循環照片輪播 */
 .detail-gallery-wrap {
   margin: 45px 0 55px;
 }
@@ -822,41 +822,95 @@ section{
   letter-spacing: 0.12em;
 }
 
+.detail-gallery-stage {
+  position: relative;
+  background: #111;
+  overflow: hidden;
+}
+
 .detail-gallery {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 100%;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  scroll-snap-type: inline mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #777 #ddd;
+  position: relative;
+  width: 100%;
+  height: min(65vh, 680px);
   background: #111;
 }
 
 .detail-gallery figure {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
   margin: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
+}
+
+.detail-gallery figure.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .detail-gallery img {
   display: block;
   width: 100%;
-  height: min(65vh, 680px);
+  height: 100%;
   background: #111;
   object-fit: contain;
   object-position: center;
   filter: none;
 }
 
-.detail-gallery figcaption {
-  padding: 12px 16px;
-  background: #111;
-  color: #bbb;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+/* 左右按鈕 */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 1px solid #fff;
+  background: rgba(10, 10, 10, 0.78);
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: 0.2s ease;
+}
+
+.gallery-arrow:hover {
+  background: #fff;
+  color: #111;
+}
+
+.gallery-prev {
+  left: 18px;
+}
+
+.gallery-next {
+  right: 18px;
+}
+
+@media (max-width: 800px) {
+  .detail-gallery {
+    height: min(55vh, 500px);
+  }
+
+  .gallery-arrow {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem;
+  }
+
+  .gallery-prev {
+    left: 10px;
+  }
+
+  .gallery-next {
+    right: 10px;
+  }
 }
 #detailTitle.project-title-compact {
   font-size: clamp(2.4rem, 4.2vw, 4.5rem);
@@ -1437,32 +1491,34 @@ section{
 >
   <div class="detail-gallery-head">
     <span>EXHIBITION PREVIEW</span>
-    <span>← 左右滑動查看 →</span>
+    <span id="galleryCounter">01 / 04</span>
   </div>
 
-  <div
-    class="detail-gallery"
-    id="detailGallery"
-  ></div>
+  <div class="detail-gallery-stage">
+    <div
+      class="detail-gallery"
+      id="detailGallery"
+    ></div>
+
+    <button
+      class="gallery-arrow gallery-prev"
+      id="galleryPrev"
+      type="button"
+      aria-label="上一張照片"
+    >
+      ←
+    </button>
+
+    <button
+      class="gallery-arrow gallery-next"
+      id="galleryNext"
+      type="button"
+      aria-label="下一張照片"
+    >
+      →
+    </button>
+  </div>
 </div>
-
-<div id="detailExtra">
-  <div class="facts">
-    <div class="fact">
-      <small>YEAR</small>
-      <strong id="detailYear"></strong>
-    </div>
-
-    <div class="fact">
-      <small>MY ROLE</small>
-      <strong id="detailRole"></strong>
-    </div>
-
-    <div class="fact">
-      <small>DURATION</small>
-      <strong id="detailDuration"></strong>
-    </div>
-  </div>
 
   <div class="detail-block">
     <small>01 / OVERVIEW</small>
@@ -1765,10 +1821,46 @@ card.innerHTML = `
         $("projectGrid").appendChild(card);
       });
     }
+
+    let galleryIndex = 0;
+
+function showGallerySlide(index) {
+  const slides = document.querySelectorAll(
+    "#detailGallery figure"
+  );
+
+  if (!slides.length) return;
+
+  /* 超過最後一張就回到第一張 */
+  galleryIndex = (index + slides.length) % slides.length;
+
+  slides.forEach((slide, slideIndex) => {
+    const isActive = slideIndex === galleryIndex;
+
+    slide.classList.toggle("active", isActive);
+    slide.setAttribute(
+      "aria-hidden",
+      isActive ? "false" : "true"
+    );
+  });
+
+  $("galleryCounter").textContent =
+    String(galleryIndex + 1).padStart(2, "0") +
+    " / " +
+    String(slides.length).padStart(2, "0");
+}
    
     function openProject(p){
       $("detailExtra").hidden = p.number === "05";
       safeImage($("detailImage"), p);
+
+      $("galleryPrev").addEventListener("click", () => {
+  showGallerySlide(galleryIndex - 1);
+});
+
+$("galleryNext").addEventListener("click", () => {
+  showGallerySlide(galleryIndex + 1);
+});
 
 $("detailNumber").textContent = "PROJECT / " + (p.number || "");
 $("detailTitle").textContent = p.title || "";
@@ -1830,17 +1922,17 @@ const detailGallery = $("detailGallery");
 detailGalleryWrap.hidden = gallery.length === 0;
 
 detailGallery.innerHTML = gallery.map((src, index) => `
-  <figure>
+  <figure class="${index === 0 ? "active" : ""}">
     <img
       src="${src}"
       alt="${p.title} 展覽照片 ${index + 1}"
       loading="lazy"
     >
-    <figcaption>
-      ${String(index + 1).padStart(2, "0")} / ${String(gallery.length).padStart(2, "0")}
-    </figcaption>
   </figure>
 `).join("");
+
+galleryIndex = 0;
+showGallerySlide(galleryIndex);
       $("detailOverview").textContent = p.overview || "";
 $("detailProcess").textContent = p.process || "";
 $("detailOutcome").textContent = p.outcome || "";
